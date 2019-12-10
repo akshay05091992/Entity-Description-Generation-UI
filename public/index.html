@@ -30,6 +30,41 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <style>
+      body {
+        font-family: "Lato", sans-serif;
+      }
+
+      #side {
+        width: 130px;
+
+        position: fixed;
+        background: #eee;
+        overflow-x: hidden;
+        padding: 8px 0;
+      }
+
+      #side a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #2196f3;
+        display: block;
+      }
+
+      #side a:hover {
+        color: #064579;
+      }
+
+      #gen {
+        margin-left: 140px; /* Same width as the sidebar + left position in px */
+        font-size: 28px; /* Increased text to enable scrolling */
+        background-color: lightblue;
+
+        height: 800px;
+        overflow: auto;
+      }
+    </style>
     <title>EDG App</title>
   </head>
   <body>
