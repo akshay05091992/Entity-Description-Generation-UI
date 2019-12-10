@@ -5,9 +5,11 @@ import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
 import Nav from "./components/nav";
 import Search from "./components/search";
+import Side from "./components/side";
 
 ReactDOM.render(<Nav />, document.getElementById("nav"));
 ReactDOM.render(<Search />, document.getElementById("search"));
+ReactDOM.render(<Side />, document.getElementById("side"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
