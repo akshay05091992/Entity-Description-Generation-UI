@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 
 class Gen extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <React.Fragment>
+        <h1>Class: {this.props.classname}</h1>
+        <h1>Search: {this.props.sname}</h1>
+        <h1>Search: {this.props.data}</h1>
+
         <h2>Auto Generate</h2>
         <p>
           This sidebar is as tall as its content (the links), and is always
