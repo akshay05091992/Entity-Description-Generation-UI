@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { directive } from "@babel/types";
+
 class Nav extends Component {
   state = {
     giturl: "https://github.com/akshay05091992/Entity-Description-Generation-UI"
@@ -18,7 +18,11 @@ class Nav extends Component {
             <h1>Welcome!</h1>
           </div>
           <div className="col">
-            <a href={this.state.giturl} target="_blank">
+            <a
+              href={this.state.giturl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {" "}
               <i
                 style={{ fontSize: "48px", color: "black" }}

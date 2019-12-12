@@ -42,7 +42,6 @@ class Side extends Component {
                   type="radio"
                   value="WIKIDATA"
                   class="form-check-input"
-                  class="form-check-input"
                   checked={this.state.data === "WIKIDATA"}
                   onChange={this.handleChange}
                 />

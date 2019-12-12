@@ -5,14 +5,10 @@ import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
 import Nav from "./components/nav";
 import Search from "./components/search";
-import Side from "./components/side";
-import Gen from "./components/gen";
 import Download from "./components/download";
 
 ReactDOM.render(<Nav />, document.getElementById("nav"));
 ReactDOM.render(<Search />, document.getElementById("search"));
-//ReactDOM.render(<Side />, document.getElementById("side"));
-// ReactDOM.render(<Gen />, document.getElementById("gen"));
 ReactDOM.render(<Download />, document.getElementById("download"));
 
 // If you want your app to work offline and load faster, you can change
