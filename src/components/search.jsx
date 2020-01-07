@@ -6,7 +6,7 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      classname: null,
+      // classname: null,
       sname: null
     };
   }
@@ -17,20 +17,21 @@ class Search extends Component {
   };
   render() {
     ReactDOM.render(
-      <Side classname={this.state.classname} sname={this.state.sname} />,
+      // classname={this.state.classname}
+      <Side sname={this.state.sname} />,
       document.getElementById("side")
     );
     return (
       <React.Fragment>
         <form>
-          <input
+          {/* <input
             type="text"
             placeholder="Class"
             id="classInput"
             name="classname"
             onChange={this.myChangeHandler}
           />{" "}
-          &nbsp;
+          &nbsp; */}
           <input
             type="text"
             placeholder="Search..."

@@ -4,7 +4,8 @@ class Gen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: null
+      messagenew: null,
+      messageold: null
     };
     this.refreshGen = this.refreshGen.bind(this);
   }
@@ -12,22 +13,33 @@ class Gen extends Component {
     this.refreshGen();
   }
   refreshGen() {
-    GenService.retrieveAll(this.props.classname,this.props.sname) // Removed HARDCODED
+    GenService.retrieveAllNew(this.props.sname) // Removed HARDCODED
       .then(response => {
         console.log(response);
-        this.setState({ message: response.data });
+        this.setState({ messagenew: response.data });
       });
-    GenService.pAll();
+    GenService.retrieveAllOld(this.props.sname) // Removed HARDCODED
+      .then(response => {
+        console.log(response);
+        this.setState({ messageold: response.data });
+      });
+    //    GenService.pAll();
   }
   render() {
     return (
       <React.Fragment>
-        <h1>Class: {"http://dbpedia.org/ontology/" + this.props.classname}</h1>
+        {/* <h1>Class: {"http://dbpedia.org/ontology/" + this.props.classname}</h1> */}
         <h1>Search: {"http://dbpedia.org/resource/" + this.props.sname}</h1>
+        &nbsp;
         <h1>Search: {this.props.data}</h1>
-        <h2>Auto Generate</h2>
-        <h2>{this.state.message}</h2>
-
+        &nbsp;
+        <h1>New Version</h1>
+        &nbsp;
+        <h2>{this.state.messagenew}</h2>
+        &nbsp;
+        <h1>Old Version</h1>
+        &nbsp;
+        <h2>{this.state.messageold}</h2>
       </React.Fragment>
     );
   }
