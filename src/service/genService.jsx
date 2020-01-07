@@ -12,9 +12,16 @@ class GenService {
     };
   }
 
-  retrieveAll() {
-    return axios.get(`${COURSE_API_URL}`);
+  //retrieveAll() {
+    //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class=Scientist&Subject=Albert_Einstein');
+  //}
+  retrieveAll(var1,var2) {
+    //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
+    return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?&Subject='+var2);  // added variables to retrieve
+
   }
+
+  
 
   pAll() {
     const summarizerData = {
@@ -27,15 +34,18 @@ class GenService {
       "Content-Type": "application/json"
     };
     axios
-      .post(
-        "http://localhost:8080/user/?paragraph=" + summarizerData.paragraph,
+      .get(
+        //"http://localhost:8080/user/?paragraph=" + summarizerData.paragraph,
+        "http://localhost:8080/resttest/v1/resource1/getinfo?Class=Scientist&Subject=Albert_Einstein",
+        //"http://localhost:8080/resttest/v1/resource1/getinfo?Class="+var1+"&Subject="+var2,
         {
           headers
         }
       )
       .then(res => console.log(res.data));
-    console.log(summarizerData.paragraph);
+    //console.log(summarizerData.paragraph);
   }
 }
 
 export default new GenService();
+
