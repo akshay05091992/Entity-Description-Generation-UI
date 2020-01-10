@@ -11,16 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-#searchInput{
-	margin-left: 20px;
-}
 .container-fluid{
 	justify-content:  end !important;
-	margin-left: 320px !important;
+	padding-left: 10px !important;
 }
 .navbar-nav {
-	display: contents !important;
-
+	display: contents !important; 
+}
+.navbar{
+	padding: 0.5rem 0rem !important;
 }
 li{
 	margin-right: 10px;
@@ -28,7 +27,6 @@ li{
 #search{
 	align-items: center;
 	display: grid;
-	margin-left: 332px;
 }
 #inputform{
 	width: 500px;
@@ -36,18 +34,17 @@ li{
 .form-check{
 	margin: 10px;
 	display: inline !important;
+	padding-left: 1rem !important;
 }
 .btn{
 	margin-right: 10px;
 	margin-left: 6px;
 }
 #side{
-	margin-left: 120px;
 	margin-bottom: 10px;
 }
 #gen{
 	height: 450px;
-	margin-left: 145px;
 	background: ghostwhite;
 }
 .output{
@@ -61,4 +58,7 @@ li{
 }
 .output2{
 	padding: 5px;
+}
+.container{
+	padding-left: 0px !important;
 }
