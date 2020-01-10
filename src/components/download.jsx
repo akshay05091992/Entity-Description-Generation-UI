@@ -4,9 +4,6 @@ class Download extends Component {
   render() {
     return (
       <React.Fragment>
-        <button type="submit" class="btn btn-primary">
-          Download
-        </button>
       </React.Fragment>
     );
   }

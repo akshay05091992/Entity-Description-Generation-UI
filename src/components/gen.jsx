@@ -28,18 +28,21 @@ class Gen extends Component {
   render() {
     return (
       <React.Fragment>
+        <div class="output2">
+
         {/* <h1>Class: {"http://dbpedia.org/ontology/" + this.props.classname}</h1> */}
-        <h1>Search: {"http://dbpedia.org/resource/" + this.props.sname}</h1>
-        &nbsp;
-        <h1>Search: {this.props.data}</h1>
-        &nbsp;
-        <h1>New Version</h1>
-        &nbsp;
-        <h2>{this.state.messagenew}</h2>
-        &nbsp;
-        <h1>Old Version</h1>
-        &nbsp;
-        <h2>{this.state.messageold}</h2>
+        <p class = "output">Search: {"http://dbpedia.org/resource/" + this.props.sname}</p>
+        
+        <p class = "output">Search: {this.props.data}</p>
+        
+        <p class = "output">New Version</p>
+        
+        <p class = "output1">{this.state.messagenew} I am the albet in the name of the world is the world in the world</p>
+        
+        <p class = "output">Old Version</p>
+        
+        <p class = "output1">{this.state.messageold} I am the albet in the name of the world is the world in the world I am the albet in the name of the world is the world in the world </p>
+        </div>
       </React.Fragment>
     );
   }

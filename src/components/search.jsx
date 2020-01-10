@@ -23,7 +23,7 @@ class Search extends Component {
     );
     return (
       <React.Fragment>
-        <form>
+        <form id="inputform">
           {/* <input
             type="text"
             placeholder="Class"
@@ -34,6 +34,7 @@ class Search extends Component {
           &nbsp; */}
           <input
             type="text"
+            class="form-control"
             placeholder="Search..."
             id="searchInput"
             name="sname"

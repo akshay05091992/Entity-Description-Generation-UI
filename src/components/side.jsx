@@ -6,7 +6,7 @@ class Side extends Component {
     super();
 
     this.state = {
-      data: "WIKIDATA"
+      data: "DBPEDIA"
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,43 +37,48 @@ class Side extends Component {
         <div class="container">
           <form onSubmit={this.handleSubmit}>
             <div class="form-check">
-              <label class="form-check-label" for="radio1">
-                <input
-                  type="radio"
-                  value="WIKIDATA"
-                  class="form-check-input"
-                  checked={this.state.data === "WIKIDATA"}
-                  onChange={this.handleChange}
-                />
-                WIKIDATA
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label" for="radio2">
+              <label class="form-check-label">
                 <input
                   type="radio"
                   value="DBPEDIA"
                   class="form-check-input"
                   checked={this.state.data === "DBPEDIA"}
                   onChange={this.handleChange}
-                />
+                  />
                 DBPEDIA
               </label>
             </div>
             <div class="form-check">
-              <label class="form-check-label" for="radio2">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  value="WIKIDATA"
+                  class="form-check-input"
+                  checked={this.state.data === "WIKIDATA"}
+                  onChange={this.handleChange}
+                  disabled
+                />
+                WIKIDATA
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
                 <input
                   type="radio"
                   value="BOTH"
                   class="form-check-input"
                   checked={this.state.data === "BOTH"}
                   onChange={this.handleChange}
+                  disabled
                 />
                 BOTH
               </label>
             </div>
             <button type="submit" class="btn btn-primary">
               Generate
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Download
             </button>
           </form>
         </div>

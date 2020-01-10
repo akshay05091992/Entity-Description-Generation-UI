@@ -36,33 +36,8 @@
       }
 
       #side {
-        width: 130px;
-
-        position: fixed;
-        background: #eee;
         overflow-x: hidden;
         padding: 8px 0;
-      }
-
-      #side a {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #2196f3;
-        display: block;
-      }
-
-      #side a:hover {
-        color: #064579;
-      }
-
-      #gen {
-        margin-left: 140px; /* Same width as the sidebar + left position in px */
-        font-size: 28px; /* Increased text to enable scrolling */
-        background-color: lightblue;
-
-        height: 800px;
-        overflow: auto;
       }
     </style>
     <title>EDG App</title>
@@ -83,9 +58,9 @@
     <div id="search" align="center"></div>
     <div id="search" align="center"></div>
     <br />
-    <div class=" row">
+    <div class="container">
       <div class=" col" id="side"></div>
-      <div class=" col" id="gen"></div>
+      <div class=" col border"  id="gen"></div>
     </div>
     <div id="download"></div>
   </body>

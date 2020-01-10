@@ -7,30 +7,23 @@ class Nav extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="row">
-          <div className="col">
-            <i
-              style={{ fontSize: "48px", color: "blue" }}
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">LD2NL</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li><a href="#"><i
+              style={{ fontSize: "24px", color: "blue" }}
               className="fa fa-info-circle float-left"
-            ></i>
-          </div>
-          <div className="col text-center">
-            <h1>Welcome !</h1>
-          </div>
-          <div className="col">
-            <a
-              href={this.state.giturl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              <i
-                style={{ fontSize: "48px", color: "black" }}
+            ></i></a></li>
+              <li><a href="#"><i
+                style={{ fontSize: "25px", color: "black" }}
                 className="fab fa-github float-right"
-              ></i>
-            </a>
-          </div>
-        </div>
+              ></i></a></li>
+            </ul>
+             </div>
+        </nav>
       </React.Fragment>
     );
   }
