@@ -13,11 +13,13 @@ code {
 }
 .container-fluid{
 	justify-content:  end !important;
-	padding-left: 10px !important;
+	padding-left: 30% !important;
 }
+
 .navbar-nav {
 	display: contents !important; 
 }
+
 .navbar{
 	padding: 0.5rem 0rem !important;
 }
@@ -32,19 +34,19 @@ li{
 	width: 500px;
 }
 .form-check{
-	margin: 10px;
+	margin: 30px;
 	display: inline !important;
-	padding-left: 1rem !important;
+	padding-left: 3% !important;
 }
 .btn{
-	margin-right: 10px;
-	margin-left: 6px;
+	margin-right: 50px;
+	margin-left: 25px;
 }
 #side{
 	margin-bottom: 10px;
 }
 #gen{
-	height: 450px;
+	height: 500px;
 	background: ghostwhite;
 }
 .output{

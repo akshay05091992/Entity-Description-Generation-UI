@@ -11,22 +11,25 @@ class GenService {
   //     paragraph: "Sending Hello To JAVA"
   //   };
   // }
-
   //retrieveAll() {
   //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class=Scientist&Subject=Albert_Einstein');
   //}
-  retrieveAllNew(var2) {
+  retrieveAllNew(sname) {
     //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
     return axios.get(
-      "http://localhost:8080/resttest/v1/resource1/getinfo?&Subject=" + var2
-    ); // added variables to retrieve
+      "http://localhost:8080/resttest/v1/resource1/getinfo?Subject=" + sname
+    );
+    
+    // added variables to retrieve
   }
-  retrieveAllOld(var2) {
+
+  retrieveAllOld(sname) {
     //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
     return axios.get(
-      "http://localhost:8080/resttest/v2/resource1/getinfo?&Subject=" + var2
+      "http://localhost:8080/resttest/v1/resource1/getinfo?Subject=" + sname
     ); // added variables to retrieve
   }
+
 
   // pAll() {
   //   const summarizerData = {

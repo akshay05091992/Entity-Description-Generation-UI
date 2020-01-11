@@ -6,10 +6,10 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Nav from "./components/nav";
 import Search from "./components/search";
-import Download from "./components/download";
+//import Download from "./components/download";
 
 ReactDOM.render(<Nav />, document.getElementById("nav"));
-
+//ReactDOM.render(<Download />, document.getElementById("download"));
 ReactDOM.render(<Search />, document.getElementById("search"));
 
 // If you want your app to work offline and load faster, you can change

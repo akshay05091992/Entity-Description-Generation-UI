@@ -15,6 +15,8 @@ class Search extends Component {
     let val = event.target.value;
     this.setState({ [nam]: val });
   };
+
+ 
   render() {
     ReactDOM.render(
       // classname={this.state.classname}
@@ -35,11 +37,12 @@ class Search extends Component {
           <input
             type="text"
             class="form-control"
-            placeholder="Search..."
+            placeholder="Type your search here"
             id="searchInput"
             name="sname"
             onChange={this.myChangeHandler}
           />
+         
         </form>
       </React.Fragment>
     );
