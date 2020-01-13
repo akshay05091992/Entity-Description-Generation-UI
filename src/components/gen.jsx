@@ -13,7 +13,8 @@ class Gen extends Component {
   }
   componentDidMount() {
     this.refreshGen();
-     }
+    document.getElementById("searchInput").value = "";
+   }
       
   refreshGen() {
     GenService.retrieveAllNew(this.props.sname) // Removed HARDCODED
@@ -31,11 +32,6 @@ class Gen extends Component {
       });
       
     }
-  // re-render for next prop but by 2nd click
-    componentWillReceiveProps(){
-      this.refreshGen();
-    }
-    //    GenService.pAll();
   
      render()
   
@@ -52,7 +48,7 @@ class Gen extends Component {
         
         <p class = "output">New Version</p>
         
-        <p class = "output1">{this.state.messagenew}</p>
+        <p class = "output1" id = "output1">{this.state.messagenew}</p>
         
         <p class = "output">Old Version</p>
         

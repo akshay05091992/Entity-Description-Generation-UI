@@ -15,6 +15,10 @@ class Side extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount(){
+    document.getElementById("download").disabled = true;
+  }
+
   handleChange(event) {    
     this.setState({
       data: event.target.value
@@ -23,26 +27,33 @@ class Side extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    ReactDOM.render(
-      <Gen
-        //classname={this.props.classname}
-        sname={this.props.sname}
-        data={this.state.data}
-        download={this.download}
-      />,
-      document.getElementById("gen")
-    );
-   
+    if(document.getElementById("output1") == null){
+        event.preventDefault();
+        ReactDOM.render(
+        <Gen
+          //classname={this.props.classname}
+          sname={this.props.sname}
+          data={this.state.data}
+          download={this.download}
+        />,
+        document.getElementById("gen")
+        );  
+        document.getElementById("download").disabled = false;
+        document.getElementById("generate").innerHTML = "Again ?";
+    }else{
+      this.forceUpdate();
+
+    }
   }
   //for downloading....
   downloadTxtFile = () => {
     const element = document.createElement("a");
-    const file = new Blob([document.getElementById('gen').value], {type: 'text/plain'});
+    const file = new Blob([document.getElementById('output1').innerHTML], {type: 'text/plain'});
     element.href = URL.createObjectURL(file);
     element.download = "myFile.txt";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
+    document.body.removeAttribute(element);
   }
   // axios({
         //   url: 'http://localhost:8080/resttest/v1/resource1/getinfo?Subject=',
@@ -123,15 +134,12 @@ class Side extends Component {
                 BOTH
               </label>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" id = "generate" class="btn btn-primary">
               Generate
             </button>
-            <button type="submit" class="btn btn-primary" onClick={this.downloadTxtFile}>
-            {/* <a type="submit" class="btn btn-primary" href="javascript.void(0)" download="data.text">    */}
+            <button id = "download" class="btn btn-primary" onClick={this.downloadTxtFile}>
                           Download 
-                           
-                          {/* </a> */}
-              </button>
+            </button>
 
                       </form>
         </div>
