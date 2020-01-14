@@ -45,7 +45,7 @@ li{
 	margin-bottom: 10px;
 }
 #gen{
-	height: 500px;
+	height: 300px;
 	background: ghostwhite;
 }
 .output{
@@ -62,4 +62,5 @@ li{
 }
 .container{
 	padding-left: 0px !important;
+	font-style: italic;
 }

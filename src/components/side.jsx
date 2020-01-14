@@ -38,58 +38,24 @@ class Side extends Component {
         />,
         document.getElementById("gen")
         );  
-        document.getElementById("download").disabled = false;
-        document.getElementById("generate").innerHTML = "Again ?";
-    }else{
+        document.getElementById("download").disabled = false;        
+        document.getElementById("generate").innerHTML = "Again ?";        
+    }else{      
       this.forceUpdate();
-
     }
   }
-  //for downloading....
+  
+  //for downloading the text file
   downloadTxtFile = () => {
     const element = document.createElement("a");
     const file = new Blob([document.getElementById('output1').innerHTML], {type: 'text/plain'});
     element.href = URL.createObjectURL(file);
-    element.download = "myFile.txt";
+    element.download = "myFile.text";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
     document.body.removeAttribute(element);
   }
-  // axios({
-        //   url: 'http://localhost:8080/resttest/v1/resource1/getinfo?Subject=',
-        //   method: 'GET',
-        //   responseType: 'blob', // important
-        // }).then((response) => {
-        //   const url = window.URL.createObjectURL(new Blob([response.data]));
-        //   const link = document.createElement('a');
-        //   link.href = url;
-        //   link.setAttribute('download', 'file.pdf');
-        //   document.body.appendChild(link);
-        //   link.click();
-        // });
-  // download = () => {
-  // 		fetch(this.messagenew)
-	// 		.then(response => {
-	// 			response.blob().then(blob => {
-	// 				let url = window.URL.createObjectURL(blob);
-	// 				let a = document.createElement('a');
-	// 				a.href = url;
-	// 				a.download = 'Summary.text';
-	// 				a.click();
-	// 			});
-  //       //window.location.href = response.url;	
-  //   });
-    
-  // }
-//   download(){  
-//   var newdata = new Blob([''], {type: 'text/plain'});
-//   var csvURL = window.URL.createObjectURL(newdata);
-//  let tempLink = document.createElement('a');
-//   tempLink.href = csvURL;
-//   tempLink.setAttribute('download', 'filename.text');
-//   tempLink.click()
-  
-//   }    
+
 
   render() {
     return (
@@ -108,6 +74,7 @@ class Side extends Component {
                 DBPEDIA
               </label>
             </div>
+            {/* Code for 2nd Phase
             <div class="form-check">
               <label class="form-check-label">
                 <input
@@ -133,15 +100,14 @@ class Side extends Component {
                 />
                 BOTH
               </label>
-            </div>
+            </div> */}
             <button type="submit" id = "generate" class="btn btn-primary">
               Generate
             </button>
             <button id = "download" class="btn btn-primary" onClick={this.downloadTxtFile}>
-                          Download 
+              Download 
             </button>
-
-                      </form>
+             </form>
         </div>
       </React.Fragment>
     );

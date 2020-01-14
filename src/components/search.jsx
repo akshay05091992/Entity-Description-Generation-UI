@@ -14,8 +14,9 @@ class Search extends Component {
     let nam = event.target.name;
     let val = event.target.value;
     this.setState({ [nam]: val });
+    
   };
-
+  
  
   render() {
     ReactDOM.render(

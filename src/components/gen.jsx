@@ -42,17 +42,17 @@ class Gen extends Component {
         <div class="output2">
 
         {/* <h1>Class: {"http://dbpedia.org/ontology/" + this.props.classname}</h1> */}
-        <p class = "output">You Searched: {this.props.sname}</p>
+        <p class = "output"><b>You Searched:</b> {this.props.sname}</p>
         
-        <p class = "output">Searched from  {this.props.data}</p>
+        <p class = "output"><b>Searched from </b> {this.props.data}</p>
         
-        <p class = "output">New Version</p>
+        <p class = "output"><b>Summary</b></p>
         
         <p class = "output1" id = "output1">{this.state.messagenew}</p>
         
-        <p class = "output">Old Version</p>
+        {/* <p class = "output">Old Version</p>
         
-        <p class = "output1">{this.state.messageold}</p>
+        <p class = "output1">{this.state.messageold}</p> */}
 
         </div>
        
