@@ -7,13 +7,14 @@ class Gen extends Component {
     this.state = {
       messagenew: null,
       messageold: null,
-      downloadURL: null
-    };
+          };
     this.refreshGen = this.refreshGen.bind(this);
   }
+  
   componentDidMount() {
     this.refreshGen();
     document.getElementById("searchInput").value = "";
+    
    }
       
   refreshGen() {
@@ -23,13 +24,13 @@ class Gen extends Component {
         this.setState({ messagenew: response.data });
       });
                          
-    
+    // Code for fetching LD2NL OLD_Version Data
       
-    GenService.retrieveAllOld(this.props.sname) // Removed HARDCODED
-      .then(response => {
-        console.log(response);
-       this.setState({ messageold: response.data });
-      });
+    // GenService.retrieveAllOld(this.props.sname) // Removed HARDCODED
+    //   .then(response => {
+    //     console.log(response);
+    //    this.setState({ messageold: response.data });
+    //   });
       
     }
   
@@ -41,7 +42,7 @@ class Gen extends Component {
       <React.Fragment>
         <div class="output2">
 
-        {/* <h1>Class: {"http://dbpedia.org/ontology/" + this.props.classname}</h1> */}
+       
         <p class = "output"><b>You Searched:</b> {this.props.sname}</p>
         
         <p class = "output"><b>Searched from </b> {this.props.data}</p>

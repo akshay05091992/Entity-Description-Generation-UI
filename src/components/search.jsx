@@ -13,8 +13,7 @@ class Search extends Component {
   myChangeHandler = event => {
     let nam = event.target.name;
     let val = event.target.value;
-    this.setState({ [nam]: val });
-    
+    this.setState({ [nam]: val }); 
   };
   
  
@@ -23,8 +22,9 @@ class Search extends Component {
       // classname={this.state.classname}
       <Side sname={this.state.sname} />,
       document.getElementById("side")
+      
     );
-    return (
+    return (      
       <React.Fragment>
         <form id="inputform">
           {/* <input
@@ -41,7 +41,8 @@ class Search extends Component {
             placeholder="Type your search here"
             id="searchInput"
             name="sname"
-            onChange={this.myChangeHandler}
+            onChange={this.myChangeHandler}             
+            
           />
          
         </form>

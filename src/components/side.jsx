@@ -27,6 +27,7 @@ class Side extends Component {
   }
 
   handleSubmit(event) {
+    
     if(document.getElementById("output1") == null){
         event.preventDefault();
         ReactDOM.render(
