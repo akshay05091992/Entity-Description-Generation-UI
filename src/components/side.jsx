@@ -4,15 +4,7 @@ import Gen from "./gen";
 class Side extends Component {
   constructor() {
     super();
-    var today = new Date(),
-      date =
-        today.getFullYear() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-
-    this.state = {
+      this.state = {
       data: "DBPEDIA",
       messagenew: null,
       messageold: null,
