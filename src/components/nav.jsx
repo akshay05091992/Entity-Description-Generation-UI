@@ -8,12 +8,12 @@ class Nav extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="https://github.com/akshay05091992/Entity-Description-Generation-UI" target="_blank" rel="noopener noreferrer"><i style={{ fontSize: "24px", color: "blue" }}>Entity-Description-Generation</i></a>
+        <nav className="navbar navbar-inverse">
+            <div className="container-fluid">
+            <div className="navbar-header">
+              <a className="navbar-brand" href="https://github.com/akshay05091992/Entity-Description-Generation-UI" target="_blank" rel="noopener noreferrer"><i style={{ fontSize: "24px", color: "blue" }}>Entity-Description-Generation</i></a>
             </div>
-            <ul class="nav navbar-nav">
+            <ul className="nav navbar-nav">
               <li><a href="#"><i
               style={{ fontSize: "24px", color: "blue" }}
               className="fa fa-info-circle float-left"

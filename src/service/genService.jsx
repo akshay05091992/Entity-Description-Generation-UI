@@ -17,12 +17,10 @@ class GenService {
   retrieveAllNew(sname) {
     //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
     return axios.get(
-      "http://localhost:8080/resttest/v1/resource1/getinfo?Subject=" + sname
+      "/getinfo?Subject=" + sname
     );
-    
     // added variables to retrieve
   }
-
   // retrieveAllOld(sname) {
   //   //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
   //   return axios.get(
