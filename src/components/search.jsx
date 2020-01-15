@@ -11,9 +11,16 @@ class Search extends Component {
     };
   }
   myChangeHandler = event => {
+    function camelize(str) {
+      return str.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      });
+    }
+    let itemname = camelize(event.target.value);
+    itemname = itemname.replace(/ /g, "_");
     let nam = event.target.name;
-    let val = event.target.value;
-    this.setState({ [nam]: val }); 
+    let val = itemname;
+    this.setState({ [nam]: val });
   };
   
  
