@@ -45,7 +45,8 @@ li{
 	margin-bottom: 10px;
 }
 #gen{
-	height: 300px;
+	min-height: 300px;
+	max-height: 600px;
 	background: ghostwhite;
 }
 .output{

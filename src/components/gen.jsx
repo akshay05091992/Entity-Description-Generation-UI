@@ -49,7 +49,7 @@ class Gen extends Component {
         
         <p class = "output"><b>Summary</b></p>
         
-        <p class = "output1" id = "output1">{this.state.messagenew}</p>
+        <p class = "output1" id = "output1">{this.state.messagenew==null?"Loading...":this.state.messagenew}</p>
         
         {/* <p class = "output">Old Version</p>
         

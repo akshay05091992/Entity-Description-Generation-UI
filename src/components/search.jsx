@@ -9,18 +9,26 @@ class Search extends Component {
       // classname: null,
       sname: null
     };
+    this.handleChange = this.handleChange.bind(this);
   }
-  myChangeHandler = event => {
-    function camelize(str) {
+
+  camelize(str) {
       return str.replace(/\w\S*/g, function(txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       });
     }
-    let itemname = camelize(event.target.value);
+
+   handleChange(event) {
+    let itemname = this.camelize(event.target.value);
     itemname = itemname.replace(/ /g, "_");
     let nam = event.target.name;
     let val = itemname;
     this.setState({ [nam]: val });
+    if(event.target.value === ""){
+      document.getElementById("generate").disabled = true;
+    }else{
+      document.getElementById("generate").disabled = false;
+    }
   };
   
  
@@ -44,11 +52,11 @@ class Search extends Component {
           &nbsp; */}
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             placeholder="Type your search here"
             id="searchInput"
             name="sname"
-            onChange={this.myChangeHandler}             
+            onChange={this.handleChange}             
             
           />
          

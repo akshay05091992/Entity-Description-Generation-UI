@@ -14,7 +14,7 @@ class Side extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  
   componentDidMount() {
     document.getElementById("download").disabled = true;
     var that = this;
@@ -51,6 +51,10 @@ class Side extends Component {
       );
       document.getElementById("download").disabled = false;
       document.getElementById("generate").innerHTML = "Again ?";
+      document.getElementById("generate").blur();
+      document.getElementById("inputform").style = "display:none";
+      document.getElementById("dbpedia").style = "display:none";
+      document.getElementById("dbpedialabel").style = "display:none";
     } else {
       this.forceUpdate();
     }
@@ -73,14 +77,15 @@ class Side extends Component {
   render() {
     return (
       <React.Fragment>
-        <div class="container">
+        <div className="container">
           <form onSubmit={this.handleSubmit}>
-            <div class="form-check">
-              <label class="form-check-label">
+            <div className="form-check">
+              <label id = "dbpedialabel" className="form-check-label">
                 <input
                   type="radio"
                   value="DBPEDIA"
-                  class="form-check-input"
+                  id = "dbpedia"
+                  className="form-check-input"
                   checked={this.state.data === "DBPEDIA"}
                   onChange={this.handleChange}
                 />
@@ -114,12 +119,12 @@ class Side extends Component {
                 BOTH
               </label>
             </div> */}
-            <button type="submit" id="generate" class="btn btn-primary">
+            <button type="submit" id="generate" className="btn btn-primary" disabled>
               Generate
             </button>
             <button
               id="download"
-              class="btn btn-primary"
+              className="btn btn-primary"
               onClick={this.downloadTxtFile}
             >
               Download
