@@ -50,7 +50,7 @@ class Gen extends Component {
     }
 
     if (!this.state.person) {
-      return <div>Timeout or Could not find a mtach</div>;
+      return <div><p class="output1" id="output1">Timeout or Could not find a mtach</p></div>;
     }
     return (
       <React.Fragment>
