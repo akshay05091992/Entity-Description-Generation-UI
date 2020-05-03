@@ -4,7 +4,7 @@ import Gen from "./gen";
 class Side extends Component {
   constructor() {
     super();
-      this.state = {
+    this.state = {
       data: "DBPEDIA",
       messagenew: null,
       messageold: null,
@@ -14,7 +14,7 @@ class Side extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
+
   componentDidMount() {
     document.getElementById("download").disabled = true;
     var that = this;
@@ -80,11 +80,11 @@ class Side extends Component {
         <div className="container">
           <form onSubmit={this.handleSubmit}>
             <div className="form-check">
-              <label id = "dbpedialabel" className="form-check-label">
+              <label id="dbpedialabel" className="form-check-label">
                 <input
                   type="radio"
                   value="DBPEDIA"
-                  id = "dbpedia"
+                  id="dbpedia"
                   className="form-check-input"
                   checked={this.state.data === "DBPEDIA"}
                   onChange={this.handleChange}
@@ -119,7 +119,12 @@ class Side extends Component {
                 BOTH
               </label>
             </div> */}
-            <button type="submit" id="generate" className="btn btn-primary" disabled>
+            <button
+              type="submit"
+              id="generate"
+              className="btn btn-primary"
+              disabled
+            >
               Generate
             </button>
             <button
