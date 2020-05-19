@@ -8,7 +8,7 @@ class Side extends Component {
       data: "DBPEDIA",
       messagenew: null,
       messageold: null,
-      date: ""
+      date: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,13 +27,13 @@ class Side extends Component {
     that.setState({
       //Setting the value of the date time
       date:
-        date + "-" + month + "-" + year + " " + hours + "_" + min + "_" + sec
+        date + "-" + month + "-" + year + " " + hours + "_" + min + "_" + sec,
     });
   }
 
   handleChange(event) {
     this.setState({
-      data: event.target.value
+      data: event.target.value,
     });
   }
 
@@ -43,7 +43,8 @@ class Side extends Component {
       ReactDOM.render(
         <Gen
           //classname={this.props.classname}
-          sname={this.props.sname}
+
+          userInput={this.props.userInput}
           data={this.state.data}
           download={this.download}
         />,
@@ -64,11 +65,16 @@ class Side extends Component {
   downloadTxtFile = () => {
     const element = document.createElement("a");
     const file = new Blob([document.getElementById("output1").innerHTML], {
-      type: "text/plain"
+      type: "text/plain",
     });
     element.href = URL.createObjectURL(file);
     element.download =
-      this.props.sname + " " + this.state.data + " " + this.state.date + ".txt";
+      this.props.userInput +
+      " " +
+      this.state.data +
+      " " +
+      this.state.date +
+      ".txt";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
     document.body.removeAttribute(element);

@@ -5,6 +5,7 @@ class Gen extends Component {
   state = {
     loading: true,
     person: null,
+    et: "ffff",
   };
 
   constructor(props) {
@@ -13,13 +14,14 @@ class Gen extends Component {
       messagenew: null,
       messageold: null,
     };
+
     this.refreshGen = this.refreshGen.bind(this);
   }
 
   async componentDidMount() {
     const url =
       "http://cors-anywhere.herokuapp.com/www.wikidata.org/w/api.php?action=wbsearchentities&search=" +
-      this.props.sname +
+      this.props.userInput +
       "&language=en&format=json";
     const response = await fetch(url);
     const data = await response.json();
@@ -29,7 +31,7 @@ class Gen extends Component {
   }
 
   refreshGen() {
-    GenService.retrieveAllNew(this.props.sname) // Removed HARDCODED
+    GenService.retrieveAllNew(this.props.userInput) // Removed HARDCODED
       .then((response) => {
         console.log(response);
         this.setState({ messagenew: response.data });
@@ -50,13 +52,19 @@ class Gen extends Component {
     }
 
     if (!this.state.person) {
-      return <div><p class="output1" id="output1">Timeout or Could not find a mtach</p></div>;
+      return (
+        <div>
+          <p class="output1" id="output1">
+            Timeout or Could not find a mtach
+          </p>
+        </div>
+      );
     }
     return (
       <React.Fragment>
         <div class="output2">
           <p class="output">
-            <b>You Searched:</b> {this.props.sname}
+            <b>You Searched:</b> {this.props.userInput}
           </p>
 
           <p class="output">
