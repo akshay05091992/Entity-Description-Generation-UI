@@ -55,6 +55,11 @@ li{
 	font-size: 21px;
 	top: 5px;
 }
+.glyphicon-repeat{
+	margin-left: 10px;
+	font-size: 21px;
+	top: 5px;
+}
 .bi-download{
 	font-size: 25px;
 	margin-left: 10px;
@@ -100,4 +105,14 @@ btn1 {
 }
 #similaritems{
 	font-size: medium;
+}
+#error{
+	margin-top: 15px;
+	margin-left: -25px;
+}
+.thumb-image{
+	max-width: 140px;
+    float: right;
+    /* margin-right: 5px; */
+    margin-top: 10px;
 }

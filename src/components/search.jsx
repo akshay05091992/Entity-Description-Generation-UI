@@ -55,6 +55,8 @@ class Search extends React.Component {
 
    document.getElementById("generate").addEventListener('click', function (event) {
      let userInput1 = document.getElementById("searchInput").value.replace(" ","_");
+     document.getElementById("searchInput").disabled = true;
+     document.getElementById("generate").className = "glyphicon glyphicon-repeat";
     if (document.getElementById("output1") == null) {
       event.preventDefault();
       ReactDOM.render(

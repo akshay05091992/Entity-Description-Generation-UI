@@ -6,15 +6,18 @@ class Gen extends Component {
     loading: true,
     person: null,
     et: "ffff",
+    errorsimilar: false,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      messagenew: null,
+      messagenew: "Loading...",
       messageold: null,
       loading: true,
       similar: null,
+      errorsimilar: false,
+      image: "",
     };
 
     this.refreshGen = this.refreshGen.bind(this);
@@ -34,25 +37,52 @@ class Gen extends Component {
   }
 
   refreshGen() {
-    GenService.retrieveAllNew(this.props.userInput) // Removed HARDCODED
-      .then((response) => {
-        console.log(response);
-        this.setState({ messagenew: response.data });
-      });
-
-    GenService.retrieveAllSimilar(this.props.userInput)
+        GenService.retrieveAllSimilar(this.props.userInput)
        .then((response) => {
-         console.log(response);
-         var res = response.data.split(" ");
-         for(var i = 0; i < res.length; i++){
+         
+         if(response.status == 200){
+           var res = response.data.split(" ");
+           for(var i = 0; i < res.length; i++){
            if(res[i] != ""){
              var li = document.createElement("li");
              li.appendChild(document.createTextNode(res[i]))
              document.getElementById("similaritems").append(li)
-           }
+             }
+           }  
+         }else{
+           this.setState({ errorsimilar: true})
          }
+         
          this.setState({ similar: response.data })
+    }).catch((error) => {
+      this.setState({ errorsimilar: true})
+    })
+
+    GenService.retrieveThubmnail(this.props.userInput)
+    .then((response) => {
+         console.log(response);
+         if(response.status == 200){
+           this.setState({ image : response.data  }) 
+         }else{
+           this.setState({ image: ""})
+         }
+    }).catch((error) => {
+      this.setState({ image: ""})
+    })
+    GenService.retrieveAllNew(this.props.userInput) // Removed HARDCODED
+      .then((response) => {
+        
+        if(response.status == 200){
+          this.setState({ messagenew: response.data });  
+        }else{
+          this.setState({ messagenew: "Error or Timeout, Refresh!" });
+        }
+        
+      }).catch((error) => {
+      this.setState({ messagenew: "Error or Timeout, Refresh!"})
     });
+
+
     // Code for fetching LD2NL OLD_Version Data
 
     // GenService.retrieveAllOld(this.props.sname) // Removed HARDCODED
@@ -82,9 +112,9 @@ class Gen extends Component {
             <li class="active"><a href="#output1" data-toggle="tab">Summary</a></li>
             <li><a href="#output2" data-toggle="tab">Similar Entities</a></li>
         </ul>
-
       <div class="tab-content">
           <div class="tab-pane active" id="output1">
+          <img class = "thumb-image" src = { this.state.image } />
             <div class="output2">
           <p class="output">
             <b>You Searched:</b> {this.props.userInput}
@@ -109,10 +139,8 @@ class Gen extends Component {
           </p>
 
           <p class="output1" id="output1">
-            {this.state.messagenew == null
-              ? "Loading..."
-              : this.state.messagenew}
-          </p>
+            { this.state.messagenew }
+          </p>    
 
           {/* <p class = "output">Old Version</p>
         
@@ -121,10 +149,12 @@ class Gen extends Component {
           </div>
           <div class="tab-pane" id="output2">
             <ul id = "similaritems">
-            </ul>
+          { this.state.errorsimilar == false
+            ? " "
+              : <p class = "error">Error or Timeout, Refresh!</p>  }
+             </ul>
           </div>
       </div>
-        
       </React.Fragment>
     );
   }
