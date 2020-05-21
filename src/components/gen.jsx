@@ -13,6 +13,7 @@ class Gen extends Component {
     this.state = {
       messagenew: null,
       messageold: null,
+      loading: true,
     };
 
     this.refreshGen = this.refreshGen.bind(this);
@@ -25,8 +26,9 @@ class Gen extends Component {
       "&language=en&format=json";
     const response = await fetch(url);
     const data = await response.json();
-    this.setState({ person: data.search[0], loading: false });
+    this.setState({ person: data.search[0]});
     this.refreshGen();
+    this.setState({ loading: false });
     document.getElementById("searchInput").value = "";
   }
 
@@ -71,15 +73,15 @@ class Gen extends Component {
             <b>Searched from </b> {this.props.data}
           </p>
 
-          <p class="output">
+          <div class="output">
             <b>wikidata dump</b>
-            <div>id:{this.state.person.id}</div>
-            <div>title:{this.state.person.title}</div>
-            <div> pageid:{this.state.person.pageid}</div>
-            <div> concepturi:{this.state.person.concepturi}</div>
-            <div> label:{this.state.person.label}</div>
-            <div> description:{this.state.person.description}</div>
-          </p>
+            <p>id:{this.state.person.id}</p>
+            <p>title:{this.state.person.title}</p>
+            <p> pageid:{this.state.person.pageid}</p>
+            <p> concepturi:{this.state.person.concepturi}</p>
+            <p> label:{this.state.person.label}</p>
+            <p> description:{this.state.person.description}</p>
+          </div>
 
           <p class="output">
             <b>Summary</b>

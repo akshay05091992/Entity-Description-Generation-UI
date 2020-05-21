@@ -15,11 +15,11 @@ class Nav extends Component {
             </div>
             <ul className="nav navbar-nav">
               <li><a href="#"><i
-              style={{ fontSize: "24px", color: "blue" }}
+              style={{ fontSize: "24px", color: "blue", marginBottom: "9px", marginLeft: "-25px" }}
               className="fa fa-info-circle float-left"
             ></i></a></li>
               <li><a href="https://github.com/aakash2000/LD2NL_EXTENSION" target="_blank" rel="noopener noreferrer"><i
-                style={{ fontSize: "25px", color: "black" }}
+                style={{ fontSize: "25px", color: "black", marginBottom: "11px", marginLeft: "-25px"  }}
                 className="fab fa-github float-right"
               ></i></a></li>
             </ul>

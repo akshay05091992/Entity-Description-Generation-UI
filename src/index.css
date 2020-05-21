@@ -30,23 +30,47 @@ li{
 	align-items: center;
 	display: grid;
 }
-#inputform{
-	width: 500px;
+#searchInput{
+	max-width: 65%;	
+	display: inline-block;
+	height: 35px;
+	font-size: 15px;
+}
+#dbpedia{
+	margin-left: 10px;
+	margin-top: 10px;
+}
+#formLabel{
+	font-weight: 400;
+	margin-left: 27px;
+	font-size: 13px;
 }
 .form-check{
 	margin: 5px;
 	display: inline !important;
 	padding-left: 3% !important;
 }
+.glyphicon-search{
+	margin-left: 10px;
+	font-size: 21px;
+	top: 5px;
+}
+.bi-download{
+	font-size: 25px;
+	margin-left: 10px;
+	margin-bottom: 3px;
+}
 .btn{
 	margin-left: 18px;
 }
-#side{
-	margin-bottom: 10px;
+btn1 {
+  stroke:#fff;
+  fill:#fff;
+  fill-opacity:0;
+  stroke-opacity:0;
 }
 #gen{
 	min-height: 300px;
-	max-height: 600px;
 	background: ghostwhite;
 }
 .output{
@@ -64,4 +88,13 @@ li{
 .container{
 	padding-left: 0px !important;
 	font-style: italic;
+}
+.navbar{
+	background-color: #ffffff;
+	border: none;
+	margin-bottom: 0px;
+}
+.navbar-inverse{
+	background-color: #ffffff;
+	border: none;
 }

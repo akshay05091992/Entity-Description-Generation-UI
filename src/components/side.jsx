@@ -83,65 +83,7 @@ class Side extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="container">
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-check">
-              <label id="dbpedialabel" className="form-check-label">
-                <input
-                  type="radio"
-                  value="DBPEDIA"
-                  id="dbpedia"
-                  className="form-check-input"
-                  checked={this.state.data === "DBPEDIA"}
-                  onChange={this.handleChange}
-                />
-                DBPEDIA
-              </label>
-            </div>
-            {/* Code for 2nd Phase
-            <div class="form-check">
-              <label class="form-check-label">
-                <input
-                  type="radio"
-                  value="WIKIDATA"
-                  class="form-check-input"
-                  checked={this.state.data === "WIKIDATA"}
-                  onChange={this.handleChange}
-                  disabled
-                />
-                WIKIDATA
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input
-                  type="radio"
-                  value="BOTH"
-                  class="form-check-input"
-                  checked={this.state.data === "BOTH"}
-                  onChange={this.handleChange}
-                 disabled
-                />
-                BOTH
-              </label>
-            </div> */}
-            <button
-              type="submit"
-              id="generate"
-              className="btn btn-primary"
-              disabled
-            >
-              Generate
-            </button>
-            <button
-              id="download"
-              className="btn btn-primary"
-              onClick={this.downloadTxtFile}
-            >
-              Download
-            </button>
-          </form>
-        </div>
+        
       </React.Fragment>
     );
   }
