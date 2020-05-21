@@ -14,6 +14,7 @@ class Gen extends Component {
       messagenew: null,
       messageold: null,
       loading: true,
+      similar: null,
     };
 
     this.refreshGen = this.refreshGen.bind(this);
@@ -29,7 +30,7 @@ class Gen extends Component {
     this.setState({ person: data.search[0]});
     this.refreshGen();
     this.setState({ loading: false });
-    document.getElementById("searchInput").value = "";
+    //document.getElementById("searchInput").value = "";
   }
 
   refreshGen() {
@@ -39,6 +40,19 @@ class Gen extends Component {
         this.setState({ messagenew: response.data });
       });
 
+    GenService.retrieveAllSimilar(this.props.userInput)
+       .then((response) => {
+         console.log(response);
+         var res = response.data.split(" ");
+         for(var i = 0; i < res.length; i++){
+           if(res[i] != ""){
+             var li = document.createElement("li");
+             li.appendChild(document.createTextNode(res[i]))
+             document.getElementById("similaritems").append(li)
+           }
+         }
+         this.setState({ similar: response.data })
+    });
     // Code for fetching LD2NL OLD_Version Data
 
     // GenService.retrieveAllOld(this.props.sname) // Removed HARDCODED
@@ -64,7 +78,14 @@ class Gen extends Component {
     }
     return (
       <React.Fragment>
-        <div class="output2">
+       <ul class="nav nav-tabs">
+            <li class="active"><a href="#output1" data-toggle="tab">Summary</a></li>
+            <li><a href="#output2" data-toggle="tab">Similar Entities</a></li>
+        </ul>
+
+      <div class="tab-content">
+          <div class="tab-pane active" id="output1">
+            <div class="output2">
           <p class="output">
             <b>You Searched:</b> {this.props.userInput}
           </p>
@@ -97,6 +118,13 @@ class Gen extends Component {
         
         <p class = "output1">{this.state.messageold}</p> */}
         </div>
+          </div>
+          <div class="tab-pane" id="output2">
+            <ul id = "similaritems">
+            </ul>
+          </div>
+      </div>
+        
       </React.Fragment>
     );
   }
