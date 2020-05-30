@@ -27,7 +27,6 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    var that = this;
     document.getElementById("download").addEventListener('click', function (event) {
     const element = document.createElement("a");
     const file = new Blob([document.getElementById("output1").innerHTML], {

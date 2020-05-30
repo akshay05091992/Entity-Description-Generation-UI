@@ -7,6 +7,9 @@ class Gen extends Component {
     person: null,
     et: "ffff",
     errorsimilar: false,
+    thumbnailImage: "",
+    similar: null,
+    sname: "",
   };
 
   constructor(props) {
@@ -18,9 +21,13 @@ class Gen extends Component {
       similar: null,
       errorsimilar: false,
       image: "",
+      thumbnailImage: "",
+      sname: "",
     };
 
     this.refreshGen = this.refreshGen.bind(this);
+    this.createItems = this.createItems.bind(this);
+    
   }
 
   async componentDidMount() {
@@ -31,37 +38,100 @@ class Gen extends Component {
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ person: data.search[0]});
+    this.setState({ sname: this.props.userInput});
     this.refreshGen();
     this.setState({ loading: false });
     //document.getElementById("searchInput").value = "";
   }
 
-  refreshGen() {
-        GenService.retrieveAllSimilar(this.props.userInput)
-       .then((response) => {
-         
-         if(response.status == 200){
-           var res = response.data.split(" ");
-           for(var i = 0; i < res.length; i++){
-           if(res[i] != ""){
-             var li = document.createElement("li");
-             li.appendChild(document.createTextNode(res[i]))
-             document.getElementById("similaritems").append(li)
-             }
-           }  
-         }else{
-           this.setState({ errorsimilar: true})
-         }
-         
-         this.setState({ similar: response.data })
-    }).catch((error) => {
-      this.setState({ errorsimilar: true})
-    })
+  async createItems() {
+      
+    if(this.state.similar !== null && this.state.similar.indexOf(" ") !== -1){
+      var res = this.state.similar.split(" ");
+      var name = "";
+      var nameText = "";
+      for(var i = 0; i < res.length; i++){
+        name = res[i];
+        if(name === ""){
+          continue;
+        }
+        console.log("name"+name);
+        if(name.lastIndexOf("/") !== -1){
+          name = name.substring(name.lastIndexOf("/")+1,name.length);
+        }
+        this.name = name;
+        await GenService.retrieveThubmnail(name)
+        .then((response) => { 
+           if(response.status === 200){
+             this.setState({ thumbnailImage: response.data });
+             this.create();
+           }else{
+             this.setState({ errorsimilar: true });
+           }       
+        });
+        
+      }
+    }
+  }
 
-    GenService.retrieveThubmnail(this.props.userInput)
+  sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+  }
+
+  loadSummary(name){
+    document.getElementById("output1href").click();
+    console.log("new name"+name);
+    this.setState({ sname: name });
+    document.getElementById("searchInput").setAttribute("disabled",false);
+    document.getElementById("searchInput").value = name;
+    var elem = document.getElementsByClassName("lielement");
+    for(var i = 0; i < elem.length; i++){
+      elem[i].remove();
+    }
+
+    this.refreshGen();
+  }  
+
+  create() {
+
+        var ul = document.getElementById("similaritems");
+        var li = document.createElement("li");
+        var div = document.createElement("div");
+        var img = document.createElement("img");
+        var a = document.createElement("a");
+        a.setAttribute("href","#");
+        var name = this.name;
+        while(name.indexOf("_") !== -1){
+          name = name.replace("_"," ")
+        }
+        a.onclick = () => {
+          this.loadSummary(name);
+        }
+        console.log("name122"+name);
+        var text = document.createTextNode("   "+name);
+        img.setAttribute("src",this.state.thumbnailImage);
+        img.setAttribute("alt","Loading");
+        img.setAttribute("class","thumb-image-small");
+        div.setAttribute("class","similar-box");
+        div.appendChild(img);
+        div.appendChild(text);
+        a.appendChild(div);
+        li.setAttribute("class","lielement");
+        li.appendChild(a);
+        ul.appendChild(li);
+  }
+
+  refreshGen() {
+    //this.setState({ sname: this.props.userInput });
+    if(this.state.sname === "" || this.state.sname === null){
+      let s = document.getElementById("searchInput").value;
+      this.setState({ sname: s  });
+    }
+    GenService.retrieveThubmnail(this.state.sname)
     .then((response) => {
          console.log(response);
-         if(response.status == 200){
+         if(response.status === 200){
            this.setState({ image : response.data  }) 
          }else{
            this.setState({ image: ""})
@@ -69,10 +139,10 @@ class Gen extends Component {
     }).catch((error) => {
       this.setState({ image: ""})
     })
-    GenService.retrieveAllNew(this.props.userInput) // Removed HARDCODED
+    GenService.retrieveAllNew(this.state.sname) // Removed HARDCODED
       .then((response) => {
         
-        if(response.status == 200){
+        if(response.status === 200){
           this.setState({ messagenew: response.data });  
         }else{
           this.setState({ messagenew: "Error or Timeout, Refresh!" });
@@ -81,6 +151,18 @@ class Gen extends Component {
       }).catch((error) => {
       this.setState({ messagenew: "Error or Timeout, Refresh!"})
     });
+    GenService.retrieveAllSimilar(this.state.sname)
+    .then((response) => {
+         if(response.status === 200){
+           console.log("Hello"+response.data);
+           this.setState({ similar: response.data });
+           this.createItems();
+         }else{
+           this.setState({ errorsimilar: true });
+         }
+    })
+
+    
 
 
     // Code for fetching LD2NL OLD_Version Data
@@ -109,15 +191,15 @@ class Gen extends Component {
     return (
       <React.Fragment>
        <ul class="nav nav-tabs">
-            <li class="active"><a href="#output1" data-toggle="tab">Summary</a></li>
-            <li><a href="#output2" data-toggle="tab">Similar Entities</a></li>
+            <li id ="summarytab" class="active"><a id = "output1href" href="#output1" data-toggle="tab">Summary</a></li>
+            <li id="similartab"><a href="#output2" data-toggle="tab">Similar Entities</a></li>
         </ul>
       <div class="tab-content">
           <div class="tab-pane active" id="output1">
-          <img class = "thumb-image" src = { this.state.image } />
+          <img class = "thumb-image" src = { this.state.image } alt = "Loading" />
             <div class="output2">
           <p class="output">
-            <b>You Searched:</b> {this.props.userInput}
+            <b>You Searched:</b> {this.state.sname}
           </p>
 
           <p class="output">
@@ -149,7 +231,7 @@ class Gen extends Component {
           </div>
           <div class="tab-pane" id="output2">
             <ul id = "similaritems">
-          { this.state.errorsimilar == false
+          { this.state.errorsimilar === false
             ? " "
               : <p class = "error">Error or Timeout, Refresh!</p>  }
              </ul>

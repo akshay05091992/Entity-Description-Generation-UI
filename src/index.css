@@ -82,6 +82,12 @@ btn1 {
 	font-size: 23px;
 	font-family: initial;
 }
+.thumb-image-small{
+	padding: 3px;
+	max-width: 150px;
+	max-height: 150px;
+	width: 100px;
+}
 .output1{
 	font-size: 20px;
 	font-family: initial;
@@ -105,14 +111,23 @@ btn1 {
 }
 #similaritems{
 	font-size: medium;
+	margin-top: 5px;
 }
 #error{
 	margin-top: 15px;
 	margin-left: -25px;
 }
 .thumb-image{
-	max-width: 140px;
-    float: right;
-    /* margin-right: 5px; */
-    margin-top: 10px;
+	float: right;
+    padding: 5px;
+    /* width: 120px; */
+    max-width: 150px;
+    max-height: 190px;
+}
+.similar-box{
+	border-style: groove;
+    width: 300px;
+    border-width: 1px;
+    box-shadow: 1px 1px 1px lightgrey;
+    margin-bottom: 5px;
 }
