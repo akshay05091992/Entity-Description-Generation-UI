@@ -17,44 +17,40 @@ class GenService {
   retrieveAllNew(sname) {
     //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
     sname = sname.toString();
-    if(sname.includes(" ")){
-      sname = sname.replace(" ","_")
+    if (sname.includes(" ")) {
+      sname = sname.replace(" ", "_");
     }
-    return axios.get(
-      "/getinfo?Subject=" + sname
-    );
+    return axios.get("/getinfo?Subject=" + sname);
     // added variables to retrieve
   }
 
-    retrieveAllSimilar(sname) {
+  retrieveAllSimilar(sname) {
     //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
     sname = sname.toString();
-    if(sname.includes(" ")){
-      sname = sname.replace(" ","_")
+    if (sname.includes(" ")) {
+      sname = sname.replace(" ", "_");
     }
-    return axios.get(
-      "/getSimilar?Subject=" + sname
-    );
-
+    return axios.get("/getSimilar?Subject=" + sname);
   }
-    retrieveThubmnail(sname) {
+  retrieveThubmnail(sname) {
     //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
     sname = sname.toString();
-    if(sname.includes(" ")){
-      sname = sname.replace(" ","_")
+    if (sname.includes(" ")) {
+      sname = sname.replace(" ", "_");
     }
-    return axios.get(
-      "/getThumnail?Subject=" + sname
-    );
+    return axios.get("/getThumnail?Subject=" + sname);
     // added variables to retrieve
   }
-  // retrieveAllOld(sname) {
-  //   //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
-  //   return axios.get(
-  //     "http://localhost:8080/resttest/v1/resource1/getinfo?Subject=" + sname
-  //   ); // added variables to retrieve
-  // }
-
+  retrieveAllOld(sname) {
+    //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
+    sname = sname.toString();
+    if (sname.includes(" ")) {
+      sname = sname.replace(" ", "_");
+    }
+    return axios.get(
+      "http://localhost:7000/resttest/v2/resource1/getinfo?Subject=" + sname
+    ); // added variables to retrieve
+  }
 
   // pAll() {
   //   const summarizerData = {
