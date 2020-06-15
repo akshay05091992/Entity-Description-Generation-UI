@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-
 import GenService from "../service/genService";
-//import axios from "axios";
-import ReactDOM from "react-dom";
-import Highlighter from "react-highlight-words";
+import Axios from "axios";
+//import ReactDOM from "react-dom";
+// import Highlighter from "react-highlight-words";
 
 class Gen extends Component {
   state = {
@@ -47,6 +46,8 @@ class Gen extends Component {
     this.setState({ sname: this.props.userInput });
     this.refreshGen();
     this.setState({ loading: false });
+    console.log(this.props.userInput);
+
     //document.getElementById("searchInput").value = "";
   }
 
@@ -104,9 +105,9 @@ class Gen extends Component {
     var a = document.createElement("a");
     a.setAttribute("href", "#");
     var name = this.name;
-    while (name.indexOf("_") !== -1) {
-      name = name.replace("_", " ");
-    }
+    // while (name.indexOf("_") !== -1) {
+    //   name = name.replace("_", " ");
+    // }
     a.onclick = () => {
       this.loadSummary(name);
     };
@@ -125,86 +126,102 @@ class Gen extends Component {
   }
 
   refreshGen() {
-    //this.setState({ sname: this.props.userInput });
     if (this.state.sname === "" || this.state.sname === null) {
       let s = document.getElementById("searchInput").value;
       this.setState({ sname: s });
     }
-    GenService.retrieveThubmnail(this.state.sname)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          this.setState({ image: response.data });
-        } else {
+    var regex = "";
+    Axios({
+      method: "get",
+      url:
+        "http://cors-anywhere.herokuapp.com/api.redirect-checker.net/?url=http://dbpedia.org/resource/" +
+        this.props.userInput +
+        "&format=json",
+      //   "&maxResults=5&format=json",
+    }).then((response) => {
+      var len = response.data.data.length - 1;
+      var path = response.data.data[len].request.info.idn.path;
+      regex = path.replace("/page/", "");
+
+      console.log(regex);
+      this.setState({ sname: regex });
+      GenService.retrieveThubmnail(this.state.sname)
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            this.setState({ image: response.data });
+          } else {
+            this.setState({ image: "" });
+          }
+        })
+        .catch((error) => {
           this.setState({ image: "" });
-        }
-      })
-      .catch((error) => {
-        this.setState({ image: "" });
-      });
-    GenService.retrieveAllNew(this.state.sname) // Removed HARDCODED
-      .then((response) => {
-        if (response.status === 200) {
-          this.setState({ messagenew: response.data });
-          ReactDOM.render(
-            <Highlighter
-              highlightClassName="YourHighlightClass"
-              searchWords={[
-                "They",
-                "Her",
-                "His",
-                "He",
-                "She",
-                "It",
-                "was a German Scientist",
-              ]}
-              caseSensitive={true}
-              textToHighlight={this.state.messagenew}
-            />,
-            document.getElementById("outputnew")
-          );
-        } else {
+        });
+      GenService.retrieveAllNew(this.state.sname) // Removed HARDCODED
+        .then((response) => {
+          if (response.status === 200) {
+            this.setState({ messagenew: response.data });
+            // ReactDOM.render(
+            //   <Highlighter
+            //     highlightClassName="YourHighlightClass"
+            //     searchWords={[
+            //       "They",
+            //       "Her",
+            //       "His",
+            //       "He",
+            //       "She",
+            //       "It",
+            //       "was a German Scientist",
+            //     ]}
+            //     caseSensitive={true}
+            //     textToHighlight={this.state.messagenew}
+            //   />,
+            //   document.getElementById("outputnew")
+            // );
+          } else {
+            this.setState({ messagenew: "Error or Timeout, Refresh!" });
+          }
+        })
+        .catch((error) => {
+          // console.log("hfffff");
           this.setState({ messagenew: "Error or Timeout, Refresh!" });
-        }
-      })
-      .catch((error) => {
-        console.log("hfffff");
-        this.setState({ messagenew: "Error or Timeout, Refresh!" });
-      });
-    GenService.retrieveAllSimilar(this.state.sname).then((response) => {
-      if (response.status === 200) {
-        console.log("Hello" + response.data);
-        this.setState({ similar: response.data });
-        this.createItems();
-      } else {
-        this.setState({ errorsimilar: true });
-      }
-    });
-
-    // Code for fetching LD2NL OLD_Version Data
-
-    GenService.retrieveAllOld(this.state.sname) // Removed HARDCODED
-      .then((response) => {
+        });
+      GenService.retrieveAllSimilar(this.state.sname).then((response) => {
         if (response.status === 200) {
-          this.setState({ messageold: response.data });
+          //  console.log("Hello" + response.data);
+          this.setState({ similar: response.data });
+          this.createItems();
         } else {
+          this.setState({ errorsimilar: true });
+        }
+      });
+
+      // Code for fetching LD2NL OLD_Version Data
+
+      GenService.retrieveAllOld(this.state.sname) // Removed HARDCODED
+        .then((response) => {
+          if (response.status === 200) {
+            this.setState({ messageold: response.data });
+          } else {
+            this.setState({ messageold: "Error or Timeout, Refresh!" });
+          }
+        })
+        .catch((error) => {
           this.setState({ messageold: "Error or Timeout, Refresh!" });
-        }
-      })
-      .catch((error) => {
-        this.setState({ messageold: "Error or Timeout, Refresh!" });
-      });
-    GenService.retrieveWikiData(this.state.person.id) // Removed HARDCODED
-      .then((response) => {
-        if (response.status === 200) {
-          this.setState({ messagewiki: response.data });
-        } else {
+        });
+      GenService.retrieveWikiData(this.state.person.id) // Removed HARDCODED
+        .then((response) => {
+          if (response.status === 200) {
+            this.setState({ messagewiki: response.data });
+          } else {
+            this.setState({ messagewiki: "Error or Timeout, Refresh!" });
+          }
+        })
+        .catch((error) => {
           this.setState({ messagewiki: "Error or Timeout, Refresh!" });
-        }
-      })
-      .catch((error) => {
-        this.setState({ messagewiki: "Error or Timeout, Refresh!" });
-      });
+        });
+    });
+    //this.setState({ sname: this.props.userInput });
   }
 
   render() {

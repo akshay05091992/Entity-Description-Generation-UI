@@ -47,7 +47,7 @@ class Search extends React.Component {
         element.download =
           document.getElementById("searchInput").value +
           " " +
-          this.state.data +
+          "DBpedia" +
           " " +
           date1 +
           ".txt";
@@ -60,10 +60,20 @@ class Search extends React.Component {
 
     document.getElementById("generate").addEventListener(
       "click",
+      // function toTitleCase(str) {
+      //   return str.replace(/\w\S*/g, function (txt) {
+      //     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      //   });
+      // },
       function (event) {
         let userInput1 = document
           .getElementById("searchInput")
-          .value.replace(" ", "_");
+          .value.toLowerCase()
+          .split(" ")
+          .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(" ")
+          .replace(/ /g, "_");
+
         document.getElementById("searchInput").disabled = true;
         document.getElementById("generate").className =
           "glyphicon glyphicon-repeat";
@@ -102,14 +112,14 @@ class Search extends React.Component {
       document.getElementById("generate").disabled = false;
     }
 
-    console.log(event.target.name);
-
     Axios({
       method: "get",
       url:
         "http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?&QueryString=" +
+        //"http://cors-anywhere.herokuapp.com/akswnc7.informatik.uni-leipzig.de/lookup/api/search?query=" +
         event.target.value +
-        "&MaxHits=5",
+        "&maxHits=5",
+      //   "&maxResults=5&format=json",
       responseType: "json",
       headers: {
         Accept: "application/json",
@@ -119,6 +129,8 @@ class Search extends React.Component {
       this.setState({
         autocompleteResults: [],
       });
+      // console.log(response.log);
+
       response.data.results.map((result, key) => {
         // allResults = allResults.push(result)
         this.setState({
@@ -150,7 +162,6 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" + this.state.sname);
     return (
       <React.Fragment>
         <form id="inputform" onSubmit={this.handleSubmit}>
