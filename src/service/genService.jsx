@@ -41,6 +41,15 @@ class GenService {
     return axios.get("/getThumnail?Subject=" + sname);
     // added variables to retrieve
   }
+  retrieveThubmnailWiki(sname) {
+    //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
+    // sname = sname.toString();
+    // if (sname.includes(" ")) {
+    //   sname = sname.replace(" ", "_");
+    // }
+    return axios.get("/getImage?Subject=" + sname);
+    // added variables to retrieve
+  }
   retrieveAllOld(sname) {
     //return axios.get('http://localhost:8080/resttest/v1/resource1/getinfo?Class='+var1+'&Subject='+var2);  // added variables to retrieve
     // sname = sname.toString();

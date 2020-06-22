@@ -40,7 +40,16 @@ li {
   margin-left: 10px;
   margin-top: 10px;
 }
+#wikidata {
+  margin-left: 10px;
+  margin-top: 10px;
+}
 #formLabel {
+  font-weight: 400;
+  margin-left: 27px;
+  font-size: 13px;
+}
+#formLabelDb {
   font-weight: 400;
   margin-left: 27px;
   font-size: 13px;
@@ -116,6 +125,9 @@ btn1 {
 #error {
   margin-top: 15px;
   margin-left: -25px;
+}
+.hide-it{
+  display: none;
 }
 .thumb-image {
   float: right;

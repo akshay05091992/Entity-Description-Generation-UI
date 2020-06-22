@@ -14,11 +14,15 @@ class Search extends React.Component {
       show: false,
       date: "",
       data: "DBPEDIA",
+      dbpedia: true,
+      wikidata: false,
       messagenew: null,
       messageold: null,
       messagewiki: null,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleDbpedia = this.handleDbpedia.bind(this);
+    this.handleWikidata = this.handleWikidata.bind(this);
     // this.handleChange = this.handleChange.bind(this);
   }
   handleChange2 = (event) => {
@@ -66,7 +70,20 @@ class Search extends React.Component {
       //   });
       // },
       function (event) {
-        let userInput1 = document
+        if (document.getElementById("output1") == null) {
+          event.preventDefault();
+          var dborwiki = "";
+          if(document.getElementById("dbpedia").checked && document.getElementById("wikidata").checked){
+            dborwiki = "both";
+          }else if(document.getElementById("dbpedia").checked){
+            dborwiki = "dbpedia";
+          }else if(document.getElementById("wikidata").checked){
+            dborwiki = "wikidata"
+          }else{
+            alert("Select wikidata or dbpedia");
+            return ;
+          }
+          let userInput1 = document
           .getElementById("searchInput")
           .value.toLowerCase()
           .split(" ")
@@ -74,19 +91,20 @@ class Search extends React.Component {
           .join(" ")
           .replace(/ /g, "_");
 
-        document.getElementById("searchInput").disabled = true;
-        document.getElementById("generate").className =
+          document.getElementById("searchInput").disabled = true;
+          document.getElementById("generate").className =
           "glyphicon glyphicon-repeat";
-        if (document.getElementById("output1") == null) {
-          event.preventDefault();
+          console.log(document.getElementById("dbpedia").checked);
           ReactDOM.render(
-            <Gen userInput={userInput1} data="DBPEDIA" />,
+            <Gen userInput={userInput1} value={dborwiki}/>,
             document.getElementById("gen")
           );
           document.getElementById("download").disabled = false;
           //document.getElementById("searchInput").style = "display:none";
           document.getElementById("formLabel").style = "display:none";
+          document.getElementById("formLabelDb").style = "display:none";
           document.getElementById("dbpedia").style = "display:none";
+          document.getElementById("wikidata").style = "display:none";
         } else {
           window.location.reload();
         }
@@ -160,6 +178,31 @@ class Search extends React.Component {
       data: event.target.value,
     });
   }
+  handleDbpedia(event){
+    console.log(this)
+    console.log(event)
+    if(this.state.dbpedia){
+        this.setState({
+          dbpedia : false
+         });
+    }else {
+        this.setState({
+          dbpedia : true
+         });
+    }
+  }
+
+  handleWikidata(event){
+    if(this.state.wikidata){
+        this.setState({
+          wikidata : false
+         });
+    }else {
+        this.setState({
+          wikidata : true
+         });
+    }
+  }
 
   render() {
     return (
@@ -177,43 +220,26 @@ class Search extends React.Component {
 
           <input
             class="form-check-input"
-            type="radio"
-            onChange={this.handleChange2}
+            type="checkbox"
             id="dbpedia"
+            onChange = {this.handleDbpedia}
             value="DBPEDIA"
-            checked={this.state.data === "DBPEDIA"}
+            checked={this.state.dbpedia}
           />
-          <label class="form-check-label" id="formLabel">
+          <label class="form-check-label" id="formLabelDb">
             DBPEDIA
           </label>
-          {/* Code for 2nd Phase
-          <div class="form-check">
-            <label class="form-check-label">
-              <input
-                type="radio"
-                value="WIKIDATA"
-                class="form-check-input"
-                checked={this.state.data === "WIKIDATA"}
-                onChange={this.handleChange}
-                disabled
-              />
-              WIKIDATA
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input
-                type="radio"
-                value="BOTH"
-                class="form-check-input"
-                checked={this.state.data === "BOTH"}
-                onChange={this.handleChange}
-               disabled
-              />
-              BOTH
-            </label>
-          </div> */}
-
+          <input
+              type="checkbox"
+              id="wikidata"
+              onChange = {this.handleWikidata}
+              value="WIKIDATA"
+              class="form-check-input"
+              checked={this.state.wikidata}
+           />
+          <label class="form-check-label" id="formLabel">
+            WIKIDATA
+          </label>
           <span class="glyphicon glyphicon-search" id="generate"></span>
 
           <svg
