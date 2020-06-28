@@ -63,6 +63,10 @@ class GenService {
     return axios.get("/getWikidata?Subject=" + sname); // added variables to retrieve
   }
 
+  retrievePronunciation(sname) {
+    return axios.get("/getPronunciation?Subject=" + sname); // added variables to retrieve
+  }
+
   // pAll() {
   //   const summarizerData = {
   //     paragraph: this.state.paragraph,

@@ -13,6 +13,7 @@ class Gen extends Component {
     thumbnailImage: "",
     similar: null,
     sname: "",
+    audio: "",
   };
 
   constructor(props) {
@@ -30,6 +31,7 @@ class Gen extends Component {
       sname: "",
       wsubject: "",
       wpredicate: "",
+      audio: ""
     };
 
     this.refreshGen = this.refreshGen.bind(this);
@@ -47,6 +49,10 @@ class Gen extends Component {
     this.setState({ sname: this.props.userInput });
     this.refreshGen();
     this.setState({ loading: false });
+    document.getElementById("audio").style = "display:none";
+    document.getElementById("audio-button").addEventListener("click",function (event){
+      document.getElementById("audio").play();
+    });
     console.log(this.props.userInput);
 
     //document.getElementById("searchInput").value = "";
@@ -221,6 +227,17 @@ class Gen extends Component {
         }
       });
 
+      GenService.retrievePronunciation(this.state.person.id).then((response) => {
+        if (response.status === 200) {
+          //  console.log("Hello" + response.data);
+          this.setState({ audio: response.data });
+          document.getElementById("audio-button").style = "display:inline-block";
+        } else {
+          this.setState({ audio: "" });
+          document.getElementById("audio-button").style = "display:none";
+        }
+      });
+
       // Code for fetching LD2NL OLD_Version Data
       if(this.props.value === "dbpedia" || this.props.value === "both"){
       GenService.retrieveAllOld(this.state.sname) // Removed HARDCODED
@@ -298,6 +315,10 @@ class Gen extends Component {
             <div class="output2">
               <p class="output">
                 <b>You Searched:</b> {this.state.sname}
+                <svg id="audio-button" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                </svg>
+                <audio id="audio" src={this.state.audio}></audio>
               </p>
               <p class="output">
                 <b>Searched from </b> {this.props.value}

@@ -26,6 +26,12 @@ module.exports = function (app) {
       })
     ),
     app.use(
+      "/getPronunciation",
+      createProxyMiddleware({
+        target: "http://localhost:8080/resttest/v1/resource1",
+      })
+    ),
+    app.use(
       "/getWikidata",
       createProxyMiddleware({
         target: "http://localhost:8080/resttest/v1/resource1",
