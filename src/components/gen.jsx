@@ -32,6 +32,7 @@ class Gen extends Component {
       wsubject: "",
       wpredicate: "",
       audio: "",
+      oname: "",
     };
 
     this.refreshGen = this.refreshGen.bind(this);
@@ -47,6 +48,7 @@ class Gen extends Component {
     const data = await response.json();
     this.setState({ person: data.search[0] });
     this.setState({ sname: this.props.userInput });
+    this.setState({ oname: this.props.userInput });
     this.refreshGen();
     this.setState({ loading: false });
     document.getElementById("audio").style = "display:none";
@@ -100,6 +102,7 @@ class Gen extends Component {
     const data = await response.json();
     this.setState({ person: data.search[0] });
     this.setState({ sname: name });
+    this.setState({ oname: name });
     document.getElementById("searchInput").setAttribute("disabled", false);
     document.getElementById("searchInput").value = name;
     var elem = document.getElementsByClassName("lielement");
@@ -140,13 +143,37 @@ class Gen extends Component {
     if (this.state.sname === "" || this.state.sname === null) {
       let s = document.getElementById("searchInput").value;
       this.setState({ sname: s });
+      this.setState({ oname: s });
     }
     var regex = "";
+    String.prototype.allReplace = function (obj) {
+      var retStr = this;
+      for (var x in obj) {
+        retStr = retStr.replace(new RegExp(x, "g"), obj[x]);
+      }
+      return retStr;
+    };
+
+    var str = this.state.sname;
+
+    str = str.allReplace({
+      é: "e",
+      à: "a",
+      è: "e",
+      ù: "u",
+      â: "a",
+      ê: "e",
+      î: "i",
+      ô: "o",
+      û: "u",
+      ç: "c",
+      ć: "c",
+    });
     Axios({
       method: "get",
       url:
         "http://cors-anywhere.herokuapp.com/api.redirect-checker.net/?url=http://dbpedia.org/resource/" +
-        this.state.sname +
+        str +
         "&format=json",
     }).then((response) => {
       var len = response.data.data.length - 1;
@@ -172,9 +199,10 @@ class Gen extends Component {
               this.setState({ image: response.data });
               var tr = this.state.image.trim();
               this.setState({ image: tr });
+
               ReactDOM.render(
                 <Search
-                  name={this.props.name}
+                  name={this.state.oname.replace(/_/g, " ")}
                   dim={this.state.image}
                   db={this.props.value}
                   dolds={this.state.messageold}
@@ -197,7 +225,7 @@ class Gen extends Component {
               this.setState({ messagenew: response.data });
               ReactDOM.render(
                 <Search
-                  name={this.props.name}
+                  name={this.state.oname.replace(/_/g, " ")}
                   dim={this.state.image}
                   db={this.props.value}
                   dolds={this.state.messageold}
@@ -246,7 +274,7 @@ class Gen extends Component {
               this.setState({ messageold: response.data });
               ReactDOM.render(
                 <Search
-                  name={this.props.name}
+                  name={this.state.oname.replace(/_/g, " ")}
                   dim={this.state.image}
                   db={this.props.value}
                   dolds={this.state.messageold}
@@ -271,7 +299,7 @@ class Gen extends Component {
               this.setState({ imageWiki: response.data });
               ReactDOM.render(
                 <Search
-                  name={this.props.name}
+                  name={this.state.oname.replace(/_/g, " ")}
                   dim={this.state.image}
                   db={this.props.value}
                   dolds={this.state.messageold}
@@ -294,7 +322,7 @@ class Gen extends Component {
               this.setState({ messagewiki: response.data });
               ReactDOM.render(
                 <Search
-                  name={this.props.name}
+                  name={this.state.oname.replace(/_/g, " ")}
                   dim={this.state.image}
                   db={this.props.value}
                   dolds={this.state.messageold}
@@ -313,6 +341,7 @@ class Gen extends Component {
           });
       }
     });
+    // .catch((error) => {});
   }
 
   render() {
@@ -353,7 +382,7 @@ class Gen extends Component {
             />
             <div class="output2">
               <p class="output">
-                <b>You Searched:</b> {this.state.sname}
+                <b>You Searched:</b> {this.state.oname.replace(/_/g, " ")}
                 <svg
                   id="audio-button"
                   width="1em"
