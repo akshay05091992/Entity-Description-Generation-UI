@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import GenService from "../service/genService";
 import Axios from "axios";
-//import ReactDOM from "react-dom";
-// import Highlighter from "react-highlight-words";
+import ReactDOM from "react-dom";
+import Search from "./search";
 
 class Gen extends Component {
   state = {
@@ -31,7 +31,7 @@ class Gen extends Component {
       sname: "",
       wsubject: "",
       wpredicate: "",
-      audio: ""
+      audio: "",
     };
 
     this.refreshGen = this.refreshGen.bind(this);
@@ -50,12 +50,11 @@ class Gen extends Component {
     this.refreshGen();
     this.setState({ loading: false });
     document.getElementById("audio").style = "display:none";
-    document.getElementById("audio-button").addEventListener("click",function (event){
-      document.getElementById("audio").play();
-    });
-    console.log(this.props.userInput);
-
-    //document.getElementById("searchInput").value = "";
+    document
+      .getElementById("audio-button")
+      .addEventListener("click", function (event) {
+        document.getElementById("audio").play();
+      });
   }
 
   async createItems() {
@@ -68,7 +67,7 @@ class Gen extends Component {
         if (name === "") {
           continue;
         }
-        console.log("name" + name);
+
         if (name.lastIndexOf("/") !== -1) {
           name = name.substring(name.lastIndexOf("/") + 1, name.length);
         }
@@ -92,7 +91,7 @@ class Gen extends Component {
 
   async loadSummary(name) {
     document.getElementById("output1href").click();
-    console.log("new name" + name);
+
     const url =
       "http://cors-anywhere.herokuapp.com/www.wikidata.org/w/api.php?action=wbsearchentities&search=" +
       name +
@@ -119,13 +118,11 @@ class Gen extends Component {
     var a = document.createElement("a");
     a.setAttribute("href", "#");
     var name = this.name;
-    // while (name.indexOf("_") !== -1) {
-    //   name = name.replace("_", " ");
-    // }
+
     a.onclick = () => {
       this.loadSummary(name);
     };
-    console.log("name122" + name);
+
     var text = document.createTextNode("   " + name);
     img.setAttribute("src", this.state.thumbnailImage);
     img.setAttribute("alt", "Loading");
@@ -140,8 +137,6 @@ class Gen extends Component {
   }
 
   refreshGen() {
-    console.log("name in regresh"+this.state.sname);
-    console.log("name2 in regresh"+this.props.userInput);
     if (this.state.sname === "" || this.state.sname === null) {
       let s = document.getElementById("searchInput").value;
       this.setState({ sname: s });
@@ -153,72 +148,75 @@ class Gen extends Component {
         "http://cors-anywhere.herokuapp.com/api.redirect-checker.net/?url=http://dbpedia.org/resource/" +
         this.state.sname +
         "&format=json",
-      //   "&maxResults=5&format=json",
     }).then((response) => {
       var len = response.data.data.length - 1;
       var path = response.data.data[len].request.info.idn.path;
       regex = path.replace("/page/", "");
 
-      console.log(regex);
       this.setState({ sname: regex });
-      if(this.props.value === "dbpedia"){
-        for(const s of document.getElementsByClassName("wikidatasummary")){
-          s.style = "display:none";  
+      if (this.props.value === "dbpedia") {
+        for (const s of document.getElementsByClassName("wikidatasummary")) {
+          s.style = "display:none";
         }
         document.getElementById("wikiImage").style = "display:none";
-        
-      }else if(this.props.value === "wikidata"){
-        for(const s of document.getElementsByClassName("dbpediasummary")){
-          s.style = "display:none";  
+      } else if (this.props.value === "wikidata") {
+        for (const s of document.getElementsByClassName("dbpediasummary")) {
+          s.style = "display:none";
         }
         document.getElementById("dbImage").style = "display:none";
       }
-      if(this.props.value === "dbpedia" || this.props.value === "both"){
+      if (this.props.value === "dbpedia" || this.props.value === "both") {
         GenService.retrieveThubmnail(this.state.sname)
-        .then((response) => {
-          console.log(response);
-          if (response.status === 200) {
-            this.setState({ image: response.data });
-          } else {
+          .then((response) => {
+            if (response.status === 200) {
+              this.setState({ image: response.data });
+              var tr = this.state.image.trim();
+              this.setState({ image: tr });
+              ReactDOM.render(
+                <Search
+                  name={this.props.name}
+                  dim={this.state.image}
+                  db={this.props.value}
+                  dolds={this.state.messageold}
+                  dnews={this.state.messagenew}
+                  wim={this.state.imageWiki}
+                  ws={this.state.messagewiki}
+                />,
+                document.getElementById("search")
+              );
+            } else {
+              this.setState({ image: "" });
+            }
+          })
+          .catch((error) => {
             this.setState({ image: "" });
-          }
-        })
-        .catch((error) => {
-          this.setState({ image: "" });
-        });
+          });
         GenService.retrieveAllNew(this.state.sname) // Removed HARDCODED
           .then((response) => {
             if (response.status === 200) {
               this.setState({ messagenew: response.data });
-              // ReactDOM.render(
-              //   <Highlighter
-              //     highlightClassName="YourHighlightClass"
-              //     searchWords={[
-              //       "They",
-              //       "Her",
-              //       "His",
-              //       "He",
-              //       "She",
-              //       "It",
-              //       "was a German Scientist",
-              //     ]}
-              //     caseSensitive={true}
-              //     textToHighlight={this.state.messagenew}
-              //   />,
-              //   document.getElementById("outputnew")
-              // );
+              ReactDOM.render(
+                <Search
+                  name={this.props.name}
+                  dim={this.state.image}
+                  db={this.props.value}
+                  dolds={this.state.messageold}
+                  dnews={this.state.messagenew}
+                  wim={this.state.imageWiki}
+                  ws={this.state.messagewiki}
+                />,
+                document.getElementById("search")
+              );
             } else {
               this.setState({ messagenew: "Error or Timeout, Refresh!" });
             }
           })
           .catch((error) => {
-            // console.log("hfffff");
             this.setState({ messagenew: "Error or Timeout, Refresh!" });
           });
-       }
+      }
       GenService.retrieveAllSimilar(this.state.sname).then((response) => {
         if (response.status === 200) {
-          //  console.log("Hello" + response.data);
           this.setState({ similar: response.data });
 
           this.createItems();
@@ -227,58 +225,94 @@ class Gen extends Component {
         }
       });
 
-      GenService.retrievePronunciation(this.state.person.id).then((response) => {
-        if (response.status === 200) {
-          //  console.log("Hello" + response.data);
-          this.setState({ audio: response.data });
-          document.getElementById("audio-button").style = "display:inline-block";
-        } else {
-          this.setState({ audio: "" });
-          document.getElementById("audio-button").style = "display:none";
+      GenService.retrievePronunciation(this.state.person.id).then(
+        (response) => {
+          if (response.status === 200) {
+            this.setState({ audio: response.data });
+            document.getElementById("audio-button").style =
+              "display:inline-block";
+          } else {
+            this.setState({ audio: "" });
+            document.getElementById("audio-button").style = "display:none";
+          }
         }
-      });
+      );
 
       // Code for fetching LD2NL OLD_Version Data
-      if(this.props.value === "dbpedia" || this.props.value === "both"){
-      GenService.retrieveAllOld(this.state.sname) // Removed HARDCODED
-        .then((response) => {
-          if (response.status === 200) {
-            this.setState({ messageold: response.data });
-          } else {
+      if (this.props.value === "dbpedia" || this.props.value === "both") {
+        GenService.retrieveAllOld(this.state.sname) // Removed HARDCODED
+          .then((response) => {
+            if (response.status === 200) {
+              this.setState({ messageold: response.data });
+              ReactDOM.render(
+                <Search
+                  name={this.props.name}
+                  dim={this.state.image}
+                  db={this.props.value}
+                  dolds={this.state.messageold}
+                  dnews={this.state.messagenew}
+                  wim={this.state.imageWiki}
+                  ws={this.state.messagewiki}
+                />,
+                document.getElementById("search")
+              );
+            } else {
+              this.setState({ messageold: "Error or Timeout, Refresh!" });
+            }
+          })
+          .catch((error) => {
             this.setState({ messageold: "Error or Timeout, Refresh!" });
-          }
-        })
-        .catch((error) => {
-          this.setState({ messageold: "Error or Timeout, Refresh!" });
-        });
+          });
       }
-      if(this.props.value === "wikidata" || this.props.value === "both"){
-      GenService.retrieveThubmnailWiki(this.state.person.id)
-        .then((response) => {
-          console.log(response);
-          if (response.status === 200) {
-            this.setState({ imageWiki: response.data });
-          } else {
+      if (this.props.value === "wikidata" || this.props.value === "both") {
+        GenService.retrieveThubmnailWiki(this.state.person.id)
+          .then((response) => {
+            if (response.status === 200) {
+              this.setState({ imageWiki: response.data });
+              ReactDOM.render(
+                <Search
+                  name={this.props.name}
+                  dim={this.state.image}
+                  db={this.props.value}
+                  dolds={this.state.messageold}
+                  dnews={this.state.messagenew}
+                  wim={this.state.imageWiki}
+                  ws={this.state.messagewiki}
+                />,
+                document.getElementById("search")
+              );
+            } else {
+              this.setState({ imageWiki: "" });
+            }
+          })
+          .catch((error) => {
             this.setState({ imageWiki: "" });
-          }
-        })
-        .catch((error) => {
-          this.setState({ imageWiki: "" });
-        });
-      GenService.retrieveWikiData(this.state.person.id) // Removed HARDCODED
-        .then((response) => {
-          if (response.status === 200) {
-            this.setState({ messagewiki: response.data });
-          } else {
+          });
+        GenService.retrieveWikiData(this.state.person.id) // Removed HARDCODED
+          .then((response) => {
+            if (response.status === 200) {
+              this.setState({ messagewiki: response.data });
+              ReactDOM.render(
+                <Search
+                  name={this.props.name}
+                  dim={this.state.image}
+                  db={this.props.value}
+                  dolds={this.state.messageold}
+                  dnews={this.state.messagenew}
+                  wim={this.state.imageWiki}
+                  ws={this.state.messagewiki}
+                />,
+                document.getElementById("search")
+              );
+            } else {
+              this.setState({ messagewiki: "Error or Timeout, Refresh!" });
+            }
+          })
+          .catch((error) => {
             this.setState({ messagewiki: "Error or Timeout, Refresh!" });
-          }
-        })
-        .catch((error) => {
-          this.setState({ messagewiki: "Error or Timeout, Refresh!" });
-        });
-        }
-      });
-    //this.setState({ sname: this.props.userInput });
+          });
+      }
+    });
   }
 
   render() {
@@ -311,18 +345,30 @@ class Gen extends Component {
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="output1">
-            <img class="thumb-image" id = "wikiImage" src={this.state.imageWiki} alt="Loading" />
+            <img
+              class="thumb-image"
+              id="wikiImage"
+              src={this.state.imageWiki}
+              alt="Loading"
+            />
             <div class="output2">
               <p class="output">
                 <b>You Searched:</b> {this.state.sname}
-                <svg id="audio-button" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                <svg
+                  id="audio-button"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  class="bi bi-play-fill"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                 </svg>
                 <audio id="audio" src={this.state.audio}></audio>
               </p>
               <p class="output">
                 <b>Searched from </b> {this.props.value}
-                {/* <b>Searched from </b> {this.props.data} */}
               </p>
               <p class="output wikidatasummary">
                 <b>------------WIKIDATA--------------</b>
@@ -336,7 +382,12 @@ class Gen extends Component {
               <p class="output dbpediasummary">
                 <b>------------DBPEDIA--------------</b>
               </p>
-              <img class="thumb-image"  id = "dbImage" src={this.state.image} alt="Loading" />
+              <img
+                class="thumb-image"
+                id="dbImage"
+                src={this.state.image}
+                alt="Loading"
+              />
               <p class="output dbpediasummary">
                 <b>Old Summary</b>
               </p>
@@ -349,13 +400,6 @@ class Gen extends Component {
               <p class="output1 dbpediasummary" id="outputnew">
                 {this.state.messagenew}
               </p>
-              {/* <p class="output">
-                <b>654654645456456454564564656564</b>
-              </p>
-              <p class="output1" id="boo"></p> */}
-              {/* <p class = "output">Old Version</p>
-        
-        <p class = "output1">{this.state.messageold}</p> */}
             </div>
           </div>
           <div class="tab-pane" id="output2">
