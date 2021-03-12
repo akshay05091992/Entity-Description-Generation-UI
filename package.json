@@ -14,7 +14,7 @@
     "create-react-class": "^15.6.3",
     "diff": "^4.0.2",
     "http-proxy-middleware": "^1.0.4",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-diff": "0.0.7",
